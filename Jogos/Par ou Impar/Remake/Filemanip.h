@@ -1,70 +1,62 @@
 #include <stdio.h>
+#include <stdlib.h>
+using namespace std;
+
+struct FileMode {
+    static const constexpr char *read = "rb";
+    static const constexpr char *write = "wb";
+    static const constexpr char *append = "ab";
+    static const constexpr char *readWrite = "rb+";
+    static const constexpr char *createWrite = "wb+";
+    static const constexpr char *readAppend = "ab+";
+};
 
 class Filemanip
 {
-
     private:
-
-        //Status 0 = Sucesso nas operações;
-        //Status -1 = Não foi possível criar a pasta;
-        //Status -2 = Não foi possível criar o arquivo;
-        int iStatus=0, iControl;
-        std::string sDirName, sCommand;
 
     public:
 
-        //Coloca e retorna o nome do diretório;
-        void setDir(std::string name)
-        {
-            sDirName = name;
-        }
+    bool isFileExists(const char *fileSrc)
+    {
+        FILE *file;
 
-        std::string getDir()
-        {
-            return sDirName;
-        }
+        file = fopen(fileSrc, FileMode::read);
+        fclose(file);
 
-        //Método de criar arquivo;
-        int newFile(std::string sFileName)
-        {
+        return file != nullptr;
+    }
 
-            FILE *file;
+    //Set up a try catch for the methods later on, incase fopen fails;
+    void createFile(const char *fileSrc)
+    {
+        FILE *file;
 
-            iControl = 0;
+        file = fopen(fileSrc, FileMode::createWrite);
+        fclose(file);
+    }
 
-            if()
-            {
+    template<typename T>
+    void writeFile(const char *fileSrc, T content)
+    {
+        FILE *file;
 
-                sCommand = "mkdir " + sDirName + ">NULL";
+        file = fopen(fileSrc, FileMode::write);
+        fwrite(&content, sizeof(T), 1, file);
 
-                do
-                {
+        fclose(file);
+    }
 
-                    //Tenta criar a pasta;
-                    if(system(sCommand))
-                    {
-                        //Erro;
-                        iStatus = -1;
-                    } //Criou;
-                    else
-                    {
-                        iStatus == 0;
-                    }
+    template<typename T>
+    T readFile(const char *fileSrc, T type)
+    {
+        FILE *file;
+        T read;
 
-                }while(iControl < 2 || iStatus == 0);
+        file = fopen(fileSrc, FileMode::read);
+        fread(&read, sizeof(T), 1, file);
+        fclose(file);
 
-            }
-
-            return iStatus;
-
-        }
-
-        //Método de escrita no arquivo;
-        //Método de leitura do arquivo;
-        //Método de verificação se o arquivo existe;
-        bool fileExist(std::string sFileName)
-        {
-            return ;
-        }
-
+        return read;
+    }
 };
