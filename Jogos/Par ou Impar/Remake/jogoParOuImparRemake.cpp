@@ -24,7 +24,7 @@ string errMsgOnlyIntAllowed()
 
 string errMsgMaxStringSize(int maxSize)
 {
-    return string("| O tamanho máximo de entrada é de até ") + to_string(maxSize) + string(" caractere(s) ou digito(s) |");
+    return string("| O tamanho máximo de entrada é de até ") + to_string(maxSize) + string(" caractere(s) ou dígito(s) |");
 }
 
 string errMsgOutsideBounds(int minBound, int maxBound)
@@ -161,7 +161,21 @@ int randNumber(int minInclusive, int maxExclusive)
     return rand() % maxExclusive + minInclusive;
 }
 
-void youLoseMsg()
+void showEvenResult()
+{
+    cout <<"------------\n";
+    cout <<"| Deu Par! |\n";
+    cout <<"------------\n\n";
+}
+
+void showOddResult()
+{
+    cout <<"--------------\n";
+    cout <<"| Deu Ímpar! |\n";
+    cout <<"--------------\n\n";
+}
+
+void showLoseMsg()
 {
     cout <<"| Que pena, você perdeu :( |\n\n";
 }
@@ -170,23 +184,17 @@ void showLoseMessage(OddOrEven userChoice)
 {
     if(userChoice == OddOrEven::Even)
     {
-        cout <<"------------\n";
-        cout <<"| Deu Par! |\n";
-        cout <<"------------\n\n";
-
-        youLoseMsg();
+        showEvenResult();
+        showLoseMsg();
     }
     else
     {
-        cout <<"--------------\n";
-        cout <<"| Deu Ímpar! |\n";
-        cout <<"--------------\n\n";
-
-        youLoseMsg();
+        showOddResult();
+        showLoseMsg();
     }
 }
 
-void youWinMessage()
+void showWinMessage()
 {
     cout <<"| Parabéns! Você venceu! :) |\n\n";
 }
@@ -195,19 +203,13 @@ void showWinMessage(OddOrEven userChoice)
 {
     if(userChoice == OddOrEven::Even)
     {
-        cout <<"------------\n";
-        cout <<"| Deu Par! |\n";
-        cout <<"------------\n\n";
-
-        youWinMessage();
+        showEvenResult();
+        showWinMessage();
     }
     else
     {
-        cout <<"--------------\n";
-        cout <<"| Deu Impar! |\n";
-        cout <<"--------------\n\n";
-
-        youWinMessage();
+        showOddResult();
+        showWinMessage();
     }
 }
 
@@ -399,7 +401,7 @@ void showWinLoseMenu(int win, int lose)
     cout <<"> Selecione uma opção: ";
 }
 
-void score()
+void showScore()
 {
     Filemanip filemanip;
     Score score = readScore(FILE_SRC);
@@ -421,8 +423,7 @@ void score()
             }
             system("cls");
         }
-    }
-    while(userChoice != 2);
+    }while(userChoice != 2);
 }
 
 void showTutorial()
@@ -444,7 +445,7 @@ void showTutorial()
     system("cls");
 }
 
-void goodbye()
+void showGoodbye()
 {
     cout <<"----------------------\n";
     cout <<"| !!!Volte Sempre!!! |\n";
@@ -488,7 +489,7 @@ int main()
                 break;
 
             case 2:
-                score();
+                showScore();
                 break;
 
             case 3:
@@ -496,7 +497,7 @@ int main()
                 break;
 
             case 4:
-                goodbye();
+                showGoodbye();
                 break;
         }
     }while(menuChoice != 4);
